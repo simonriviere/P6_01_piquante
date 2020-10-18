@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt'); // crypte les mots de passe
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const passwordValidator = require('../middleware/passwordValidator');
-const dotenv = require('dotenv').config()
+const passwordValidator = require('../middleware/passwordValidator'); //vérifie le format du mot de passe 
+
 
 exports.signup = (req, res, next) => {
   if (!passwordValidator.validate(req.body.password)) {
@@ -22,9 +22,6 @@ exports.signup = (req, res, next) => {
   }
 
 };
-
-
-
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {

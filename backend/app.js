@@ -8,6 +8,7 @@ const saucesRoutes = require('./routes/sauce');
 const helmet = require('helmet');//protège les vulnérabilité d'en tête HTPP
 const mongoSanitize = require('express-mongo-sanitize'); //prévenir les injections
 
+//connexion à la bdd
 mongoose.connect('mongodb+srv://' + process.env.DB_LOGIN + ':' + process.env.DB_PASS + '@cluster0.76ulj.mongodb.net/' + process.env.DB_NAME + '?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
@@ -19,6 +20,9 @@ mongoose.connect('mongodb+srv://' + process.env.DB_LOGIN + ':' + process.env.DB_
 const app = express();
 
 app.use(helmet());
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
 
 // gérer les erreurs CROS, ajout de middleware qui s'appliquera à toute les routes
 app.use((req, res, next) => {
@@ -34,10 +38,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //affiche les images sans le path
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-
-app.use(mongoSanitize({
-    replaceWith: '_'
-}))
 
 app.use('/api/sauces', saucesRoutes)
 app.use('/api/auth', userRoutes);
