@@ -6,16 +6,20 @@ const fs = require('fs'); //acces au fichier pour delete
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce)
     delete sauceObject._id; // l'id est fournis automatiquement du coup on ne récupère pas celui du front 
+
     const sauce = new Sauce({
         ...sauceObject, //détail les info du body du front posté
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 
     });
+   
     // thing.save() permet d'enregistrer le thing dans la base de donnée et renvoyer une promise
     sauce.save().then(
         () => res.status(201).json({
-            message: 'objet enregistré !'
-        })) //tjrs envoyer une res
+            message: 'objet enregistré !' 
+          
+        })) //tjrs envoyer une res  
+
         .catch(
             error => res.status(400).json({
                 error
