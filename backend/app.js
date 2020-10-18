@@ -8,7 +8,7 @@ const saucesRoutes = require('./routes/sauce');
 const helmet = require('helmet');//protège les vulnérabilité d'en tête HTPP
 const mongoSanitize = require('express-mongo-sanitize'); //prévenir les injections
 
-mongoose.connect('mongodb+srv://'+process.env.DB_LOGIN+':'+process.env.DB_PASS+'@cluster0.76ulj.mongodb.net/'+process.env.DB_NAME+'?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://' + process.env.DB_LOGIN + ':' + process.env.DB_PASS + '@cluster0.76ulj.mongodb.net/' + process.env.DB_NAME + '?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -37,8 +37,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(mongoSanitize({
     replaceWith: '_'
-  }))
-  
+}))
+
 app.use('/api/sauces', saucesRoutes)
 app.use('/api/auth', userRoutes);
 

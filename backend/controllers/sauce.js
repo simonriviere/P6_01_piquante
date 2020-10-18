@@ -12,12 +12,12 @@ exports.createSauce = (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 
     });
-   
+
     // thing.save() permet d'enregistrer le thing dans la base de donnée et renvoyer une promise
     sauce.save().then(
         () => res.status(201).json({
-            message: 'objet enregistré !' 
-          
+            message: 'objet enregistré !'
+
         })) //tjrs envoyer une res  
 
         .catch(
